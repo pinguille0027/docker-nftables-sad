@@ -17,18 +17,18 @@ services:
     networks:
       default:
       redcurro:
-        ipv4_address: 192.168.10.20
-  trono02:
+        ipv4_address: 192.168.30.3
+  it01:
     build: ./builds/gui
-    container_name: trono02    
-    hostname: trono02
+    container_name: it01    
+    hostname: it01
     privileged: true
     volumes:
-        - ./trono02/nftables-trono02.conf:/etc/nftables.conf
-        - ./trono02/engade-ruta.bash:/engade-ruta.bash
+        - ./it01/nftables-trono02.conf:/etc/nftables.conf
+        - ./it01/engade-ruta.bash:/engade-ruta.bash
     networks:
       redcurro:
-        ipv4_address: 192.168.10.21
+        ipv4_address: 192.168.30.21
   printer01:
     build: ./builds/ssh-apache
     container_name: printer01    
@@ -121,24 +121,33 @@ services:
          ipv4_address: 192.168.20.10
         
 networks:
-  redcurro:
-    driver: bridge
+  redcom:
+    internal: true #Bloquea o acceso a internet
     ipam:
       config:
         - subnet: 192.168.10.0/24 
-  redsegura:
+  redrrhh:
     internal: true #Bloquea o acceso a internet
     ipam:
       config:
-        - subnet: 172.16.0.0/16 
-
-  internet:
+        - subnet: 192.168.20.0/24
+  redit:
     internal: true #Bloquea o acceso a internet
     ipam:
-     config:
-       - subnet: 22.88.0.0/16
-  redcasa:
+      config:
+        - subnet: 192.168.30.0/24
+  dmz:
+    internal: true #Bloquea o acceso a internet
+    ipam:
+      config:
+        - subnet: 192.168.40.0/24
+  redinterna:
+    internal: true #Bloquea o acceso a internet
+    ipam:
+      config:
+        - subnet: 192.168.0.0/252
+  redpublica:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.20.0/24 
+        - subnet: 45.60.60.0/24 

@@ -1,0 +1,144 @@
+version: '3.3'
+
+services:
+  trono:
+    build: ./builds/gui
+    ports:
+      - "3000:22"
+      - "5900:5900"
+      - "6080:80"
+    container_name: trono    
+    hostname: trono
+    privileged: true
+    volumes:
+        - ./trono/nftables-trono.conf:/etc/nftables.conf
+        - ./trono/engade-ruta.bash:/engade-ruta.bash
+        - ./trono/index-trono.html:/usr/local/lib/web/frontend/index.html
+    networks:
+      default:
+      redcurro:
+        ipv4_address: 192.168.10.20
+  trono02:
+    build: ./builds/gui
+    container_name: trono02    
+    hostname: trono02
+    privileged: true
+    volumes:
+        - ./trono02/nftables-trono02.conf:/etc/nftables.conf
+        - ./trono02/engade-ruta.bash:/engade-ruta.bash
+    networks:
+      redcurro:
+        ipv4_address: 192.168.10.21
+  printer01:
+    build: ./builds/ssh-apache
+    container_name: printer01    
+    hostname: printer01
+    privileged: true
+    volumes:
+        - ./printer01/index-printer01.html:/var/www/html/index.html
+        - ./printer01/nftables-printer01.conf:/etc/nftables.conf
+        - ./printer01/engade-ruta.bash:/engade-ruta.bash
+    networks:
+      redcurro:
+        ipv4_address: 192.168.10.50
+  equipointermedio:
+    build: ./builds/ssh
+    container_name: equipointermedio   
+    hostname: equipointermedio
+    privileged: true
+    volumes:
+        - ./equipointermedio/nftables-equipointermedio.conf:/etc/nftables.conf
+        - ./equipointermedio/engade-ruta.bash:/engade-ruta.bash
+    networks:
+      redcurro:
+        ipv4_address: 192.168.10.200
+      redsegura:
+        ipv4_address: 172.16.0.3
+  backupserver:
+    build: ./builds/gui
+    container_name: backup-server   
+    hostname: backup-server
+    privileged: true
+    volumes:
+        - ./backupserver/nftables-backupserver.conf:/etc/nftables.conf
+        - ./backupserver/index-backupserver.html:/usr/local/lib/web/frontend/index.html
+        - ./backupserver/engade-ruta.bash:/engade-ruta.bash
+    networks:
+      redsegura:
+        ipv4_address: 172.16.10.100
+  cluster:
+    build: ./builds/ssh-apache
+    container_name: cluster 
+    hostname: cluster
+    privileged: true
+    volumes:
+        - ./cluster/index-cluster.html:/var/www/html/index.html
+        - ./cluster/nftables-cluster.conf:/etc/nftables.conf
+        - ./cluster/engade-ruta.bash:/engade-ruta.bash
+    networks:
+      redsegura:
+        ipv4_address: 172.16.10.130
+  rcurro:
+    build: ./builds/ssh
+    container_name: rcurro
+    hostname: rcurro
+    privileged: true
+    volumes:
+        - ./rcurro/nftables-rcurro.conf:/etc/nftables.conf
+    networks:
+      redcurro:
+        ipv4_address: 192.168.10.254
+      internet:
+        ipv4_address: 22.88.33.41
+
+  rcasa:
+    build: ./builds/ssh
+    container_name: rcasa
+    hostname: rcasa
+    privileged: true
+    volumes:
+        - ./rcasa/nftables-rcasa.conf:/etc/nftables.conf
+    networks:
+      internet:
+        ipv4_address: 22.88.44.11
+      redcasa:
+        ipv4_address: 192.168.20.254
+  home-laptop-01: 
+     build: ./builds/gui
+     ports:
+       - "5000:22"
+       - "5001:5900"
+     container_name: home-laptop-01
+     hostname: home-laptop-01
+     privileged: true
+     volumes:
+       - ./home-laptop-01/nftables-home-laptop-01.conf:/etc/nftables.conf
+       - ./home-laptop-01/engade-ruta.bash:/engade-ruta.bash
+       - ./home-laptop-01/index-home-laptop-01.html:/usr/local/lib/web/frontend/index.html
+     networks:
+       default:
+       redcasa:
+         ipv4_address: 192.168.20.10
+        
+networks:
+  redcurro:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.10.0/24 
+  redsegura:
+    internal: true #Bloquea o acceso a internet
+    ipam:
+      config:
+        - subnet: 172.16.0.0/16 
+
+  internet:
+    internal: true #Bloquea o acceso a internet
+    ipam:
+     config:
+       - subnet: 22.88.0.0/16
+  redcasa:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.20.0/24 

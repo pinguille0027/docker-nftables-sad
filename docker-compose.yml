@@ -16,7 +16,7 @@ services:
         - ./trono/index-trono.html:/usr/local/lib/web/frontend/index.html
     networks:
       default:
-      redcurro:
+      redit:
         ipv4_address: 192.168.30.3
   it01:
     build: ./builds/gui
@@ -27,99 +27,110 @@ services:
         - ./it01/nftables-trono02.conf:/etc/nftables.conf
         - ./it01/engade-ruta.bash:/engade-ruta.bash
     networks:
-      redcurro:
+      redit:
         ipv4_address: 192.168.30.21
-  printer01:
-    build: ./builds/ssh-apache
-    container_name: printer01    
-    hostname: printer01
-    privileged: true
-    volumes:
-        - ./printer01/index-printer01.html:/var/www/html/index.html
-        - ./printer01/nftables-printer01.conf:/etc/nftables.conf
-        - ./printer01/engade-ruta.bash:/engade-ruta.bash
-    networks:
-      redcurro:
-        ipv4_address: 192.168.10.50
-  equipointermedio:
-    build: ./builds/ssh
-    container_name: equipointermedio   
-    hostname: equipointermedio
-    privileged: true
-    volumes:
-        - ./equipointermedio/nftables-equipointermedio.conf:/etc/nftables.conf
-        - ./equipointermedio/engade-ruta.bash:/engade-ruta.bash
-    networks:
-      redcurro:
-        ipv4_address: 192.168.10.200
-      redsegura:
-        ipv4_address: 172.16.0.3
-  backupserver:
+  rrhh01:
     build: ./builds/gui
-    container_name: backup-server   
-    hostname: backup-server
+    container_name: rrhh01    
+    hostname: rrhh01
     privileged: true
     volumes:
-        - ./backupserver/nftables-backupserver.conf:/etc/nftables.conf
-        - ./backupserver/index-backupserver.html:/usr/local/lib/web/frontend/index.html
-        - ./backupserver/engade-ruta.bash:/engade-ruta.bash
+        - ./cli/nftables-cli.conf:/etc/nftables.conf
+        - ./cli/engade-ruta.bash:/engade-ruta.bash
     networks:
-      redsegura:
-        ipv4_address: 172.16.10.100
-  cluster:
+      redrrhh:
+        ipv4_address: 192.168.20.21
+  com01:
+    build: ./builds/gui
+    container_name: com01    
+    hostname: com01
+    privileged: true
+    volumes:
+        - ./cli/nftables-cli.conf:/etc/nftables.conf
+        - ./cli/engade-ruta.bash:/engade-ruta.bash
+    networks:
+      redcom:
+        ipv4_address: 192.168.10.21
+  printerrrhh:
     build: ./builds/ssh-apache
-    container_name: cluster 
-    hostname: cluster
+    container_name: printerrrhh    
+    hostname: printerrrhh
     privileged: true
     volumes:
-        - ./cluster/index-cluster.html:/var/www/html/index.html
-        - ./cluster/nftables-cluster.conf:/etc/nftables.conf
-        - ./cluster/engade-ruta.bash:/engade-ruta.bash
+        - ./printer/index-printer01.html:/var/www/html/index.html
+        - ./printer/nftables-printer01.conf:/etc/nftables.conf
+        - ./printer/engade-ruta.bash:/engade-ruta.bash
     networks:
-      redsegura:
-        ipv4_address: 172.16.10.130
-  rcurro:
+      redrrhh:
+        ipv4_address: 192.168.20.50
+  printercom:
+    build: ./builds/ssh-apache
+    container_name: printerrrhh    
+    hostname: printerrrhh
+    privileged: true
+    volumes:
+        - ./printer/index-printer01.html:/var/www/html/index.html
+        - ./printer/nftables-printer01.conf:/etc/nftables.conf
+        - ./printer/engade-ruta.bash:/engade-ruta.bash
+    networks:
+      redcom:
+        ipv4_address: 192.168.10.50
+  firewallint:
     build: ./builds/ssh
-    container_name: rcurro
-    hostname: rcurro
+    container_name: firewallint   
+    hostname: firewallint
     privileged: true
     volumes:
-        - ./rcurro/nftables-rcurro.conf:/etc/nftables.conf
+        - ./firewallint/nftables-firewallint.conf:/etc/nftables.conf
+        - ./firewallint/engade-ruta.bash:/engade-ruta.bash
     networks:
-      redcurro:
-        ipv4_address: 192.168.10.254
-      internet:
-        ipv4_address: 22.88.33.41
-
-  rcasa:
+      redit:
+        ipv4_address: 192.168.30.1
+      redrrhh:
+        ipv4_address: 192.168.20.1
+      redcom:
+        ipv4_address: 192.168.10.1
+      redinterna:
+        ipv4_address: 192.168.0.2
+  firewallfrontera:
     build: ./builds/ssh
-    container_name: rcasa
-    hostname: rcasa
+    container_name: firewallfrontera   
+    hostname: firewallfrontera
     privileged: true
     volumes:
-        - ./rcasa/nftables-rcasa.conf:/etc/nftables.conf
+        - ./firewallfrontera/nftables-firewallfrontera.conf:/etc/nftables.conf
+        - ./firewallfrontera/engade-ruta.bash:/engade-ruta.bash
     networks:
-      internet:
-        ipv4_address: 22.88.44.11
-      redcasa:
-        ipv4_address: 192.168.20.254
-  home-laptop-01: 
-     build: ./builds/gui
-     ports:
-       - "5000:22"
-       - "5001:5900"
-     container_name: home-laptop-01
-     hostname: home-laptop-01
-     privileged: true
-     volumes:
-       - ./home-laptop-01/nftables-home-laptop-01.conf:/etc/nftables.conf
-       - ./home-laptop-01/engade-ruta.bash:/engade-ruta.bash
-       - ./home-laptop-01/index-home-laptop-01.html:/usr/local/lib/web/frontend/index.html
-     networks:
-       default:
-       redcasa:
-         ipv4_address: 192.168.20.10
-        
+      dmz:
+        ipv4_address: 192.168.40.1
+      redpublica:
+        ipv4_address: 45.60.60.60
+      redinterna:
+        ipv4_address: 192.168.0.1
+  webserver:
+    build: ./builds/ssh-apache
+    container_name: webserver  
+    hostname: webserver
+    privileged: true
+    volumes:
+        - ./server/nftables-server.conf:/etc/nftables.conf
+        - ./server/index-web.html:/usr/local/lib/web/frontend/index.html
+        - ./server/engade-ruta.bash:/engade-ruta.bash
+    networks:
+      dmz:
+        ipv4_address: 192.168.40.10
+  emailserver:
+    build: ./builds/ssh-apache
+    container_name: emailserver  
+    hostname: emailserver
+    privileged: true
+    volumes:
+        - ./server/nftables-server.conf:/etc/nftables.conf
+        - ./server/index-email.html:/usr/local/lib/web/frontend/index.html
+        - ./server/engade-ruta.bash:/engade-ruta.bash
+    networks:
+      dmz:
+        ipv4_address: 192.168.40.20 
 networks:
   redcom:
     internal: true #Bloquea o acceso a internet
@@ -145,7 +156,7 @@ networks:
     internal: true #Bloquea o acceso a internet
     ipam:
       config:
-        - subnet: 192.168.0.0/252
+        - subnet: 192.168.0.0/30
   redpublica:
     driver: bridge
     ipam:

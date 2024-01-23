@@ -1,1 +1,0 @@
-echo I LOVE ASO AND DOCKER

@@ -24,7 +24,7 @@ services:
     hostname: it01
     privileged: true
     volumes:
-        - ./it01/nftables-trono02.conf:/etc/nftables.conf
+        - ./it01/nftables-it01.conf:/etc/nftables.conf
         - ./it01/engade-ruta.bash:/engade-ruta.bash
     networks:
       redit:
@@ -35,8 +35,8 @@ services:
     hostname: rrhh01
     privileged: true
     volumes:
-        - ./cli/nftables-cli.conf:/etc/nftables.conf
-        - ./cli/engade-ruta.bash:/engade-ruta.bash
+        - ./rrhh01/nftables-rrhh01.conf:/etc/nftables.conf
+        - ./rrhh01/engade-ruta.bash:/engade-ruta.bash
     networks:
       redrrhh:
         ipv4_address: 192.168.20.21
@@ -46,8 +46,8 @@ services:
     hostname: com01
     privileged: true
     volumes:
-        - ./cli/nftables-cli.conf:/etc/nftables.conf
-        - ./cli/engade-ruta.bash:/engade-ruta.bash
+        - ./com01/nftables-com01.conf:/etc/nftables.conf
+        - ./com01/engade-ruta.bash:/engade-ruta.bash
     networks:
       redcom:
         ipv4_address: 192.168.10.21
@@ -57,9 +57,9 @@ services:
     hostname: printerrrhh
     privileged: true
     volumes:
-        - ./printer/index-printer01.html:/var/www/html/index.html
-        - ./printer/nftables-printer01.conf:/etc/nftables.conf
-        - ./printer/engade-ruta.bash:/engade-ruta.bash
+        - ./printerrrhh/index-printerrrhh.html:/var/www/html/index.html
+        - ./printerrrhh/nftables-printerrrhh.conf:/etc/nftables.conf
+        - ./printerrrhh/engade-ruta.bash:/engade-ruta.bash
     networks:
       redrrhh:
         ipv4_address: 192.168.20.50
@@ -69,9 +69,9 @@ services:
     hostname: printerrrhh
     privileged: true
     volumes:
-        - ./printer/index-printer01.html:/var/www/html/index.html
-        - ./printer/nftables-printer01.conf:/etc/nftables.conf
-        - ./printer/engade-ruta.bash:/engade-ruta.bash
+        - ./printercom/index-printercom.html:/var/www/html/index.html
+        - ./printercom/nftables-printercom.conf:/etc/nftables.conf
+        - ./printercom/engade-ruta.bash:/engade-ruta.bash
     networks:
       redcom:
         ipv4_address: 192.168.10.50
@@ -130,7 +130,19 @@ services:
         - ./server/engade-ruta.bash:/engade-ruta.bash
     networks:
       dmz:
-        ipv4_address: 192.168.40.20 
+        ipv4_address: 192.168.40.20
+  internetserver:
+    build: ./builds/ssh-apache
+    container_name: webserver  
+    hostname: webserver
+    privileged: true
+    volumes:
+        - ./internetserver/nftables-server.conf:/etc/nftables.conf
+        - ./internetserver/index-internet.html:/usr/local/lib/web/frontend/index.html
+        - ./internetserver/engade-ruta.bash:/engade-ruta.bash
+    networks:
+      redpublica:
+        ipv4_address: 45.60.60.45
 networks:
   redcom:
     internal: true #Bloquea o acceso a internet

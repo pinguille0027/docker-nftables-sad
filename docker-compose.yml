@@ -106,7 +106,7 @@ services:
       redpublica:
         ipv4_address: 45.60.60.60
       redinterna:
-        ipv4_address: 192.168.0.1
+        ipv4_address: 162.168.0.1
   webserver:
     build: ./builds/ssh-apache
     container_name: webserver  

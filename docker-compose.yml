@@ -65,8 +65,8 @@ services:
         ipv4_address: 192.168.20.50
   printercom:
     build: ./builds/ssh-apache
-    container_name: printerrrhh    
-    hostname: printerrrhh
+    container_name: printercom    
+    hostname: printercom
     privileged: true
     volumes:
         - ./printercom/index-printercom.html:/var/www/html/index.html
@@ -85,13 +85,13 @@ services:
         - ./firewallint/engade-ruta.bash:/engade-ruta.bash
     networks:
       redit:
-        ipv4_address: 192.168.30.1
+        ipv4_address: 192.168.30.254
       redrrhh:
-        ipv4_address: 192.168.20.1
+        ipv4_address: 192.168.20.254
       redcom:
-        ipv4_address: 192.168.10.1
+        ipv4_address: 192.168.10.254
       redinterna:
-        ipv4_address: 192.168.0.2
+        ipv4_address: 192.168.0.3
   firewallfrontera:
     build: ./builds/ssh
     container_name: firewallfrontera   
@@ -102,11 +102,11 @@ services:
         - ./firewallfrontera/engade-ruta.bash:/engade-ruta.bash
     networks:
       dmz:
-        ipv4_address: 192.168.40.1
+        ipv4_address: 192.168.40.254
       redpublica:
         ipv4_address: 45.60.60.60
       redinterna:
-        ipv4_address: 162.168.0.1
+        ipv4_address: 192.168.0.2
   webserver:
     build: ./builds/ssh-apache
     container_name: webserver  
@@ -118,7 +118,7 @@ services:
         - ./server/engade-ruta.bash:/engade-ruta.bash
     networks:
       dmz:
-        ipv4_address: 192.168.40.10
+        ipv4_address: 192.168.40.40
   emailserver:
     build: ./builds/ssh-apache
     container_name: emailserver  
@@ -133,8 +133,10 @@ services:
         ipv4_address: 192.168.40.20
   internetserver:
     build: ./builds/ssh-apache
-    container_name: webserver  
-    hostname: webserver
+    ports:
+      - "5000:22"
+    container_name: internetserver  
+    hostname: internetserver
     privileged: true
     volumes:
         - ./internetserver/nftables-server.conf:/etc/nftables.conf
@@ -168,7 +170,7 @@ networks:
     internal: true #Bloquea o acceso a internet
     ipam:
       config:
-        - subnet: 192.168.0.0/30
+        - subnet: 192.168.0.0/29
   redpublica:
     driver: bridge
     ipam:

@@ -84,6 +84,7 @@ services:
         - ./firewallint/nftables-firewallint.conf:/etc/nftables.conf
         - ./firewallint/engade-ruta.bash:/engade-ruta.bash
     networks:
+      default:
       redit:
         ipv4_address: 192.168.30.254
       redrrhh:

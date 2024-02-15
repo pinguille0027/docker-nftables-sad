@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install openssh-server iproute2 iputils-ping nftables traceroute tcptraceroute nano-tiny  -y 
+RUN apt-get update && apt-get install openssh-server iproute2 iputils-ping nftables traceroute tcptraceroute nano-tiny rsyslog ulogd2  -y 
 
 RUN mkdir /var/run/sshd
 

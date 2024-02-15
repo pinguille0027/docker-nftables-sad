@@ -1,6 +1,6 @@
 FROM dorowu/ubuntu-desktop-lxde-vnc
 RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-RUN apt-get update && apt-get install openssh-server iproute2 iputils-ping remmina ssh nftables traceroute nano-tiny -y 
+RUN apt-get update && apt-get install openssh-server iproute2 iputils-ping remmina ssh nftables traceroute nano-tiny rsyslog -y 
 
 RUN mkdir /var/run/sshd
 

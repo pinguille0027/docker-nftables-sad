@@ -17,7 +17,7 @@ services:
     networks:
       default:
       redit:
-        ipv4_address: 192.168.30.3
+        ipv4_address: 10.0.30.3
   it01:
     build: ./builds/gui
     container_name: it01    
@@ -28,7 +28,7 @@ services:
         - ./it01/engade-ruta.bash:/engade-ruta.bash
     networks:
       redit:
-        ipv4_address: 192.168.30.21
+        ipv4_address: 10.0.30.21
   rrhh01:
     build: ./builds/gui
     container_name: rrhh01    
@@ -39,7 +39,7 @@ services:
         - ./rrhh01/engade-ruta.bash:/engade-ruta.bash
     networks:
       redrrhh:
-        ipv4_address: 192.168.20.21
+        ipv4_address: 10.0.20.21
   com01:
     build: ./builds/gui
     container_name: com01    
@@ -50,7 +50,7 @@ services:
         - ./com01/engade-ruta.bash:/engade-ruta.bash
     networks:
       redcom:
-        ipv4_address: 192.168.10.21
+        ipv4_address: 10.0.10.21
   printerrrhh:
     build: ./builds/ssh-apache
     container_name: printerrrhh    
@@ -62,7 +62,7 @@ services:
         - ./printerrrhh/engade-ruta.bash:/engade-ruta.bash
     networks:
       redrrhh:
-        ipv4_address: 192.168.20.50
+        ipv4_address: 10.0.20.50
   printercom:
     build: ./builds/ssh-apache
     container_name: printercom    
@@ -74,7 +74,7 @@ services:
         - ./printercom/engade-ruta.bash:/engade-ruta.bash
     networks:
       redcom:
-        ipv4_address: 192.168.10.50
+        ipv4_address: 10.0.10.50
   firewallint:
     build: ./builds/ssh
     container_name: firewallint   
@@ -86,13 +86,13 @@ services:
     networks:
       default:
       redit:
-        ipv4_address: 192.168.30.254
+        ipv4_address: 10.0.30.254
       redrrhh:
-        ipv4_address: 192.168.20.254
+        ipv4_address: 10.0.20.254
       redcom:
-        ipv4_address: 192.168.10.254
+        ipv4_address: 10.0.10.254
       redinterna:
-        ipv4_address: 192.168.0.3
+        ipv4_address: 10.0.0.3
   firewallfrontera:
     build: ./builds/ssh
     container_name: firewallfrontera   
@@ -103,11 +103,11 @@ services:
         - ./firewallfrontera/engade-ruta.bash:/engade-ruta.bash
     networks:
       dmz:
-        ipv4_address: 192.168.40.254
+        ipv4_address: 10.0.40.254
       redpublica:
         ipv4_address: 45.60.60.60
       redinterna:
-        ipv4_address: 192.168.0.2
+        ipv4_address: 10.0.0.2
   webserver:
     build: ./builds/ssh-apache
     container_name: webserver  
@@ -119,7 +119,7 @@ services:
         - ./server/engade-ruta.bash:/engade-ruta.bash
     networks:
       dmz:
-        ipv4_address: 192.168.40.40
+        ipv4_address: 10.0.40.40
   emailserver:
     build: ./builds/ssh-apache
     container_name: emailserver  
@@ -131,7 +131,7 @@ services:
         - ./server/engade-ruta.bash:/engade-ruta.bash
     networks:
       dmz:
-        ipv4_address: 192.168.40.20
+        ipv4_address: 10.0.40.20
   internetserver:
     build: ./builds/ssh-apache
     ports:
@@ -151,27 +151,27 @@ networks:
     internal: true #Bloquea o acceso a internet
     ipam:
       config:
-        - subnet: 192.168.10.0/24 
+        - subnet: 10.0.10.0/24 
   redrrhh:
     internal: true #Bloquea o acceso a internet
     ipam:
       config:
-        - subnet: 192.168.20.0/24
+        - subnet: 10.0.20.0/24
   redit:
     internal: true #Bloquea o acceso a internet
     ipam:
       config:
-        - subnet: 192.168.30.0/24
+        - subnet: 10.0.30.0/24
   dmz:
     internal: true #Bloquea o acceso a internet
     ipam:
       config:
-        - subnet: 192.168.40.0/24
+        - subnet: 10.0.40.0/24
   redinterna:
     internal: true #Bloquea o acceso a internet
     ipam:
       config:
-        - subnet: 192.168.0.0/29
+        - subnet: 10.0.0.0/29
   redpublica:
     driver: bridge
     ipam:
